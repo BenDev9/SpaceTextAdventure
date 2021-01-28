@@ -21,7 +21,7 @@
 isRunning = True
 import time
 
-hints = ["Explore the spaceship by using the [move] command", "There might be some tools in the engine bays", "Have you checked the Med Bay for supplies?", "One of your fellow astronauts might have brought some photos with them", "The technicians might have left some stuff lying around when they were working in Electrical", "The scientists used a lot of dangerous gases in the labs"]
+hints = ["Explore the spaceship by using the [move] command", "There might be some tools in the engine bays", "Have you checked the Med Bay for supplies?", "One of your fellow astronauts might have brought some digital photos with them", "The technicians might have left some stuff lying around when they were working in Electrical", "The scientists used a lot of dangerous gases in the labs"]
 
 class Data:
     class ViewingDome:
@@ -86,7 +86,12 @@ class Functions:
     def GetHint():
         global hints
         global Data
-        print("Hint: " + hints[Data.hintNum])
+        try:
+            print("Hint: " + hints[Data.hintNum])
+        except:
+            print("You have run out of hints")
+
+        Data.hintNum +=1
 
 
     def Analyze(inText=""):
@@ -189,6 +194,7 @@ time.sleep(5)
 Functions.PrintHelp()
 
 while isRunning:
+    print("")
     inputText = input("What would you like to do? > ")
     inputText = inputText.lower()
     Functions.Analyze(inputText)
