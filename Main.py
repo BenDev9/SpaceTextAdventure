@@ -19,6 +19,7 @@
 #  |__________|          |__________|          |__________|
 
 isRunning = True
+import time
 
 class Data:
     class ViewingDome:
@@ -86,7 +87,7 @@ class Functions:
             global isRunning
             isRunning = False
         elif "where" in inText:
-            Functions.FindCurrentRoom()
+            print(Functions.FindCurrentRoom())
         elif "lookAround" in inText:
             Functions.GetRoomInfo()
         elif "help" in inText:
@@ -138,6 +139,8 @@ class Actions:
     global Data
 
     def Move(dir):
+        lastPos = Data.currentPos
+
         if dir == "north":
             Data.y += 1
             Data.currentPos = (Data.x, Data.y)
@@ -153,12 +156,27 @@ class Actions:
         else:
             print("That's not a possible direction")
 
-        print("You are now in " + Functions.FindCurrentRoom())
+        if Data.currentPos != lastPos: print("You are now in " + Functions.FindCurrentRoom())
 
 print("Welcome, the game will begin shortly......")
+
+print("You wake up, your body floating in the air. As you twist around, you catch a glimps outside of the window. A blue orb floats silently outside. Earth.")
+time.sleep(10)
+print("")
+print("You shout out, looking for your crewmates, but you get no reply. As you examine the docking ports, realization washes over you.")
+print("")
+time.sleep(8)
+print("They left")
+time.sleep(3)
+print("")
+print("You have an idea! The other landing pod is still there! Unfortunately, it needs some repairs.")
+time.sleep(5)
+print("<Game> You need to gather these materials: Spanner, Tape, Cables, Thumb Drive, Oxygen Mask, Oxygen Tank </Game>")
+time.sleep(5)
+
 Functions.PrintHelp()
 
 while isRunning:
-    inputText = input("what would you like to do> ")
+    inputText = input("What would you like to do? > ")
     inputText = inputText.lower()
     Functions.Analyze(inputText)
