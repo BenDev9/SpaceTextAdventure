@@ -21,8 +21,41 @@
 isRunning = True
 
 class Data:
-    
+    class ViewingDome:
+        position = (0,0)
+        discovered = False
 
+    class Lab1:
+        position = (-1,0)
+        discovered = False
+
+    class Lab2:
+        position = (0,0)
+        discovered = False
+
+    class LeftEngine:
+        position = (-1,-1)
+        discovered = False
+
+    class Electrical:
+        position = (0,-1)
+        discovered = False
+
+    class RightEngine:
+        position = (1,-1)
+        discovered = False
+
+    class MedBay:
+        position = (0,1)
+        discovered = False
+
+    class Barracks2:
+        position = (-1,1)
+        discovered = False
+
+    class Barracks1:
+        position = (1,1)
+        discovered = False
 
     x = 0
     y = 0
@@ -31,6 +64,19 @@ class Data:
 
 class Functions:
     inText = str("")
+
+    def PrintHelp():
+        print('''
+            
+            Commands:
+            ***NOTICE: These commands aren't case sensitive***
+            ·Move <north/east/sout/west>: This is the command you use to move around the map
+            ·ExitGame: This command exits the game (Duh)
+            ·Where: This command tells you which room you are in
+            ·LookAround: This command describes the room that you are in
+            ·Help: This command brings up the help dialogue
+            
+        ''')
 
     def Analyze(inText=""):
         if "move" in inText:
@@ -41,17 +87,10 @@ class Functions:
             isRunning = False
         elif "where" in inText:
             Functions.FindCurrentRoom()
-        elif "where" in inText:
+        elif "lookAround" in inText:
             Functions.GetRoomInfo()
         elif "help" in inText:
-            print('''
-            
-                Commands:
-                ***NOTICE: These commands aren't case sensitive***
-                ·Move <north/east/sout/west>: This is the command you use to move around the map
-                ·ExitGame: This command exits the game (Duh)
-            
-            ''')
+            Functions.PrintHelp()
         else:
             print("Unknown command")
 
@@ -99,22 +138,25 @@ class Actions:
     global Data
 
     def Move(dir):
-        if dir != "north" or dir != "south" or dir != "east" or dir != "west": print("Not a possible direction")
+        if dir == "north":
+            Data.y += 1
+            Data.currentPos = (Data.x, Data.y)
+        elif dir == "south":
+            Data.y -= 1
+            Data.currentPos = (Data.x, Data.y)
+        elif dir == "east":
+            Data.x += 1
+            Data.currentPos = (Data.x, Data.y)
+        elif dir == "west":
+            Data.x -= 1
+            Data.currentPos = (Data.x, Data.y)
         else:
-            if dir == "north":
-                Data.y += 1
-                Data.currentPos = (Data.x, Data.y)
-            elif dir == "south":
-                Data.y -= 1
-                Data.currentPos = (Data.x, Data.y)
-            elif dir == "east":
-                Data.x += 1
-                Data.currentPos = (Data.x, Data.y)
-            elif dir == "west":
-                Data.x -= 1
-                Data.currentPos = (Data.x, Data.y)
+            print("That's not a possible direction")
 
         print("You are now in " + Functions.FindCurrentRoom())
+
+print("Welcome, the game will begin shortly......")
+Functions.PrintHelp()
 
 while isRunning:
     inputText = input("what would you like to do> ")
