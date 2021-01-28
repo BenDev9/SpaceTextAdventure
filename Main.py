@@ -21,6 +21,8 @@
 isRunning = True
 import time
 
+hints = ["Explore the spaceship by using the [move] command", "There might be some tools in the engine bays", "Have you checked the Med Bay for supplies?", "One of your fellow astronauts might have brought some photos with them", "The technicians might have left some stuff lying around when they were working in Electrical", "The scientists used a lot of dangerous gases in the labs"]
+
 class Data:
     class ViewingDome:
         position = (0,0)
@@ -61,6 +63,7 @@ class Data:
     x = 0
     y = 0
     currentPos = (x,y)
+    hintNum = 0
 
 
 class Functions:
@@ -76,8 +79,15 @@ class Functions:
             ·Where: This command tells you which room you are in
             ·LookAround: This command describes the room that you are in
             ·Help: This command brings up the help dialogue
+            ·Hint: This command gives you a (potentially) helpful hint
             
         ''')
+
+    def GetHint():
+        global hints
+        global Data
+        print("Hint: " + hints[Data.hintNum])
+
 
     def Analyze(inText=""):
         if "move" in inText:
@@ -92,6 +102,8 @@ class Functions:
             Functions.GetRoomInfo()
         elif "help" in inText:
             Functions.PrintHelp()
+        elif "hint" in inText:
+            Functions.GetHint()
         else:
             print("Unknown command")
 
